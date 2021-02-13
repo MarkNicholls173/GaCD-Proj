@@ -11,59 +11,65 @@ library(dplyr)
 
 # 1. merge the data sets
 
-# load both data sets
-# establish common variable name
-# do the merge
-# 2 sets constructed the same way.... common method should work for both
-# do test as its the smaller one
-
-
 #get variable names, common to both test and train 
-df_col_names <- read.table("./data/features.txt")
-col_names <- df_col_names[[2]]
+col_names <- read.table("./data/features.txt")[[2]]
 
 #load test data
-df_test <- read.table("./data/test/X_test.txt")
-names(df_test) <- col_names
+df_xtest <- read.table("./data/test/X_test.txt")
+names(df_xtest) <- col_names
 
+#load the test activity data
+df_ytest <- read.table("./data/test/y_test.txt")
+names(df_ytest) <- c("Activity")
 #load test subject data
-sub_test <- read.table("./data/test/subject_test.txt")
-names(sub_test) <- c("Subject")
+df_sub_test <- read.table("./data/test/subject_test.txt")
+names(df_sub_test) <- c("Subject")
 
-#combined 
-df_test_com <- cbind(sub_test, df_test)
+#combine the 3 
+df_test_com <- cbind(df_sub_test, df_ytest, df_xtest)
+
 
 #load train data
-df_train <- read.table("./data/train/X_train.txt")
-names(df_train) <- col_names
+df_xtrain <- read.table("./data/train/X_train.txt")
+names(df_xtrain) <- col_names
+
+#load the train activity data
+df_ytrain <- read.table("./data/train/y_train.txt")
+names(df_ytrain) <- c("Activity")
 
 #load train subject data
-sub_train <- read.table("./data/train/subject_train.txt")
-names(sub_train) <- c("Subject")
+df_sub_train <- read.table("./data/train/subject_train.txt")
+names(df_sub_train) <- c("Subject")
 
-#combined 
-df_train_com <- cbind(sub_train, df_train)
+#combine the 3
+df_train_com <- cbind(df_sub_train, df_ytrain, df_xtrain)
 
 #combine test and train data
 df_test_train <- rbind(df_test_com, df_train_com)
 
 #clean up environment
-rm(col_names, df_col_names, df_test, df_test_com,
-   df_train, df_train_com, sub_test, sub_train)
+rm(col_names, 
+   df_xtest, df_ytest, df_test_com, df_sub_test, 
+   df_xtrain, df_ytrain, df_train_com, df_sub_train)
 
 
 # 2. extract mean and std for each measurement
 
-df_test_train <- df_test_train[,grep("Subject|mean|std", names(df_test_train))]
-
+df_test_train <- df_test_train[,grep("Subject|Activity|mean|std", 
+                                     names(df_test_train))]
 
 # 3. change activity name to something descriptive
 
-#activity in y_<name>.txt need to add to steps above 
-df_ytest <- read.table("./data/test/y_test.txt")
+# load the activity labels
+act_labels <- read.table("./data/activity_labels.txt")[[2]]
+
+# replace data with activity label
+df_test_train <- mutate(df_test_train, Activity = act_labels[Activity])
 
 
-# 4. use descriptive variable names - done
+# 4. use descriptive variable names - clean up names a bit?
+
+
 
 
 # 5. from data in step 4, create new data set ave for each act and each subject
