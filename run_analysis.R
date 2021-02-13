@@ -52,13 +52,25 @@ rm(col_names, df_col_names, df_test, df_test_com,
    df_train, df_train_com, sub_test, sub_train)
 
 
-# 2. extract mean and std dev for each measurement
+# 2. extract mean and std for each measurement
+
+df_test_train <- df_test_train[,grep("Subject|mean|std", names(df_test_train))]
 
 
 # 3. change activity name to something descriptive
 
+#activity in y_<name>.txt need to add to steps above 
+df_ytest <- read.table("./data/test/y_test.txt")
 
-# 4. use descriptive variable names
+
+# 4. use descriptive variable names - done
 
 
 # 5. from data in step 4, create new data set ave for each act and each subject
+
+
+# documentation
+
+# make codebook
+
+# make readme
