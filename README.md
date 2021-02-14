@@ -115,8 +115,8 @@ write.table(df_summary, file = "summary_table.txt", row.names = FALSE)
 
 Once run this file creates two data frames in the users environment:
 
-df_test_train - a tidy data set resultant from the merge of tt and train data
-df_summary -  a tidy data set summarising the mean per subject/activity 
+ - df_test_train - a tidy data set resultant from the merge of test and train data
+ - df_summary -  a tidy data set summarising the mean per subject/activity 
 
 The following file is saved to the user's working directory
 
