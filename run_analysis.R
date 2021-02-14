@@ -6,9 +6,8 @@
 # before the steps that fulfill them
 
 #load required packages
-
-library(dplyr) # needed for the merge command
-library(tidyr) # needed for pivot_longer and pivot_wider commends
+library(dplyr) # for the mutate, group_by and summarise commands
+library(tidyr) # for pivot_longer and pivot_wider commands
 
 
 # 1. Merge the training and the test sets to create one data set.
